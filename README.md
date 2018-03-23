@@ -1,25 +1,23 @@
-![CF](https://camo.githubusercontent.com/70edab54bba80edb7493cad3135e9606781cbb6b/687474703a2f2f692e696d6775722e636f6d2f377635415363382e706e67) Lab 08: SQL and PostgreSQL
+![CF](https://camo.githubusercontent.com/70edab54bba80edb7493cad3135e9606781cbb6b/687474703a2f2f692e696d6775722e636f6d2f377635415363382e706e67) Lab 09: Database Relationships & SQL Joins
 ===
-
 ## Code Wars Challenge
 
-Complete [today's Kata](https://www.codewars.com/kata/format-words-into-a-sentence) and follow the submission instructions from Lab 01.
+Complete [today's Kata](https://www.codewars.com/kata/reversed-strings) and follow the submission instructions from Lab 01.
 
-## Lab 08 Submission Instructions
+## Lab 09 Submission Instructions
 Follow the submission instructions from Lab 01.
 
 ## Resources  
-[SQL Syntax Cheatsheet](cheatsheets/sql.md)
+[SQLBolt](http://sqlbolt.com/) -- Interactive SQL Tutorial
 
-[PostgreSQL Shell Cheatsheet](cheatsheets/postgress-shell.md)
+[SQL Cheat Sheet](http://www.cheat-sheets.org/sites/sql.su/)
 
-[PostgreSQL Docs](https://www.postgresql.org/docs/)
+[Query String Primer](https://en.wikipedia.org/wiki/Query_string)
 
 ## Configuration
 _Your repository must include:_
-
 ```
-08-sql-intro-and-postgres
+09-sql-joins-relations
 └── starter-code
 └── driver-navigator
   ├── .eslintrc.json
@@ -30,21 +28,21 @@ _Your repository must include:_
   ├── package-lock.json
   ├── package.json
   ├── public
-  │   ├── data
-  │   │   └── hackerIpsum.json
-  │   ├── index.html
-  │   ├── new.html
-  │   ├── scripts
-  │   │   ├── article.js
-  │   │   └── articleView.js
-  │   ├── styles
-  │   │   ├── base.css
-  │   │   ├── layout.css
-  │   │   └── modules.css
-  │   └── vendor
+  │   ├── data
+  │   │   └── hackerIpsum.json
+  │   ├── index.html
+  │   ├── new.html
+  │   ├── scripts
+  │   │   ├── article.js
+  │   │   └── articleView.js
+  │   ├── styles
+  │   │   ├── base.css
+  │   │   ├── layout.css
+  │   │   └── modules.css
+  │   └── vendor
   │       ├── scripts
   │       │   └── highlight.pack.js
-  │       └── styles
+  │       └── styles
   │           ├── fonts
   │           │   ├── icomoon.eot
   │           │   ├── icomoon.svg
@@ -52,40 +50,27 @@ _Your repository must include:_
   │           │   └── icomoon.woff
   │           ├── default.css
   │           ├── icons.css
-  │           ├── normalize.css
-  │           └── railscasts.css
+  │           ├── normalize.css
+  │           └── railscasts.css
   └── server.js
 └── PULL_REQUEST_TEMPLATE.md
 └── README.md
 ```
 
-## User Stories and Feature Tasks
+## Feature Tasks
+***Don't forget to set your conString!***
 
-*As a user, I want to store my articles in a database so that my articles are available for users from an external source.*
+*As a developer, I want to utilize SQL queries so that I can join data together in the database and access it based on specific criteria.*
 
-- Install and require the NPM PostgreSQL package `pg` in your server.js file.
-- Make sure to complete the connection string.
-  - Windows and Linux users: You should have retained the user/password from the pre-work for this course. Your OS may require that your connection string is composed of additional information including user and password. For example: `const conString = 'postgres://USER:PASSWORD@HOST:PORT/DBNAME'`;
-  - Mac users: `const conString = 'postgres://localhost:5432'`;
-- Pass the appropriate argument when instantiating a new Client.
-- The articleView.js methods are different now that we are not accessing the JSON file directly, and instead retrieving the articles from a database. Therefore, we no longer need to export the JSON, so remove all code that was involved in performing this action.
-
-*As a developer, I want to write proper SQL queries so that I can interact with the blog articles in my database.*
-
-- Write a SQL query to retrieve all of the articles from your database.
-- Write a SQL query to update a single article in your database. Make sure to provide the appropriate data for the article.
-- Write a SQL query to remove all articles from your database.
-- Once you complete the TODOs, follow the instructions in the adjacent [08-CRUD-testing.md](08-CRUD-testing.md) doc to verify that everything works.
-
-
-*As a developer, I want to review my code base so that I have a deep understanding of its overall functionality.*
-
-- Study each of the new routes in your server.js file by examining the SQL statements and any associated data being handed through the request.
-- For each of the `COMMENT` items in server.js, provide a brief description of what that function immediately below is doing. Be sure to indicate, where applicable, details such as:
-  - What number(s) of the full-stack-diagram.png image is this part of the code interacting with?
-  - Which method of article.js is interacting with this particular piece of server.js?
-  - What part of ***CRUD*** is being enacted/managed by this particular piece of code?
-  - As applicable, an additional sentence or two of explanation about what the code is doing, what NPM packages are involved, etc. The goal is to demonstrate that you understand what is going on in the code without glossing over details, but also without writing a novel about it.
+- Write a SQL query to join all data from articles and authors tables on the author_id value of each when the articles are retrieved.
+- Write a SQL query to create a new article.
+  - Insert an author and pass the author and authorUrl as data for the query. On conflict, do nothing.
+  - In the second query, add the SQL commands to retrieve a single author from the authors table. Add the author name as data for the query.
+  - In the third query, add the SQL commands to insert the new article using the author_id from the second query. Add the data from the new article, including the author_id, as data for the SQL query.
+- Write a SQL query to update an author record and article record.
+  - Remember that the articles now have an author_id property, so we can reference it from the request.body. Add the required values from the request as data for the SQL query to interpolate.
+  - After the author has been updated, you will then need to update an article record. Remember that the article records now have an author_id, in addition to title, category, publishedOn, and body. Add the required values from the request as data for the SQL query to interpolate.
+- Once you complete the above feature tasks, follow the instructions in the adjacent [09-CRUD-testing.md](09-CRUD-testing.md) doc to verify that everything works.
 
 ## Documentation
 _Your README.md must include:_
