@@ -40,7 +40,7 @@ app.get('/articles', (request, response) => {
 app.post('/articles', (request, response) => {
   client.query(
     `INSERT INTO authors(author, "authorUrl")
-    VALUES ($1, $2);`,
+    VALUES ($1, $2) ON CONFLICT DO NOTHING;`,
     [request.body.author, request.body.authorUrl],
     function(err) {
       if (err) console.error(err);
@@ -86,9 +86,9 @@ app.put('/articles/:id', function(request, response) {
     .then(() => {
       client.query(
         `UPDATE articles
-        SET title=$1, category=$2, "publishedOn"=$3, body=$4
+        SET title=$1, category=$2, "publishedOn"=$3, body=$4, author_id=$6
         WHERE article_id=$5;`,
-        [request.body.title, request.body.category, request.body.publishedOn, request.body.body, request.params.id]
+        [request.body.title, request.body.category, request.body.publishedOn, request.body.body, request.params.id, request.body.author_id]
       )
     })
     .then(() => {
@@ -122,7 +122,7 @@ app.delete('/articles', (request, response) => {
     });
 });
 
-// REVIEW: This calls the loadDB() function, defined below.
+// DONE: This calls the loadDB() function, defined below.
 loadDB();
 
 app.listen(PORT, () => {
@@ -133,7 +133,7 @@ app.listen(PORT, () => {
 //////// ** DATABASE LOADERS ** ////////
 ////////////////////////////////////////
 
-// REVIEW: This helper function will load authors into the DB if the DB is empty.
+// DONE: This helper function will load authors into the DB if the DB is empty.
 function loadAuthors() {
   fs.readFile('./public/data/hackerIpsum.json', 'utf8', (err, fd) => {
     JSON.parse(fd).forEach(ele => {
@@ -145,7 +145,7 @@ function loadAuthors() {
   })
 }
 
-// REVIEW: This helper function will load articles into the DB if the DB is empty.
+// DONE: This helper function will load articles into the DB if the DB is empty.
 function loadArticles() {
   client.query('SELECT COUNT(*) FROM articles')
     .then(result => {
@@ -167,7 +167,7 @@ function loadArticles() {
     })
 }
 
-// REVIEW: Below are two queries, wrapped in the loadDB() function, which create separate tables in our DB, and create a relationship between the authors and articles tables.
+// DONE: Below are two queries, wrapped in the loadDB() function, which create separate tables in our DB, and create a relationship between the authors and articles tables.
 // THEN they load their respective data from our JSON file.
 function loadDB() {
   client.query(`
